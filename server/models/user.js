@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const { encryptPassword } = require('../helpers/bcrypt')
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -44,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+
+  User.addHook('beforeCreate', user => {
+    user.password = encryptPassword(user.password)
+  })
 
   return User;
   
