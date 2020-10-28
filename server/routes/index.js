@@ -1,6 +1,8 @@
 const router = require('express').Router()
-const AppController = require('../controllers/app-controller')
+const userRouter = require('./user')
+const newsRouter = require('./news')
 
-router.get('/', AppController.getIndex)
+router.use('/', userRouter)
+router.use('/news', newsRouter)
 
 module.exports = router

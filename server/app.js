@@ -11,13 +11,19 @@ const cors = require('cors')
 // * Require Router
 const router = require('./routes/')
 
+// * Require Error Handler
+const errorhandler = require('./middlewares/errorhandler')
+
 // * Use Middleware + Cors
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
-// * Set The Router
+// * Use The Router
 app.use(router)
+
+// * Use Error Handler
+app.use(errorhandler)
 
 // * Start The App
 app.listen(PORT, () => {

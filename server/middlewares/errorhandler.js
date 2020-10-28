@@ -1,6 +1,7 @@
 const errStatusJoin = require('../helpers/errstatusjoin')
 
 module.exports = (err, req, res, next) => {
+    console.log(err);
     const errName = err.name
     const errErrors = err.errors
 
@@ -11,6 +12,9 @@ module.exports = (err, req, res, next) => {
     const uniqueErr = `SequelizeUniqueConstraintError`
     const validationErr = `SequelizeValidationError`
 
+    // * Custom Error Message
+    const loginErr = `Email atau Password salah`
+
     switch(errName) {
         case uniqueErr:
             message = errStatusJoin(errErrors)
@@ -20,7 +24,11 @@ module.exports = (err, req, res, next) => {
             message = errStatusJoin(errErrors)
             status = 400
             break
+        case loginErr:
+            message = loginErr
+            status = 401
+            break
     }
 
-    req.status(status).json({ msg: message })
+    res.status(status).json({ msg: message })
 }
